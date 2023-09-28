@@ -1,4 +1,4 @@
-module github.com/forevengetmathmmqqmm/goGinExample
+module goGinExample
 
 go 1.20
 
@@ -10,6 +10,7 @@ require (
 	github.com/chenzhuoyu/iasm v0.9.0 // indirect
 	github.com/gabriel-vasile/mimetype v1.4.2 // indirect
 	github.com/gin-contrib/sse v0.1.0 // indirect
+	github.com/go-ini/ini v1.67.0 // indirect
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/go-playground/validator/v10 v10.15.4 // indirect
@@ -23,6 +24,7 @@ require (
 	github.com/pelletier/go-toml/v2 v2.1.0 // indirect
 	github.com/twitchyliquid64/golang-asm v0.15.1 // indirect
 	github.com/ugorji/go/codec v1.2.11 // indirect
+	github.com/unknwon/com v1.0.1 // indirect
 	golang.org/x/arch v0.5.0 // indirect
 	golang.org/x/crypto v0.13.0 // indirect
 	golang.org/x/net v0.15.0 // indirect
@@ -31,12 +33,6 @@ require (
 	google.golang.org/protobuf v1.31.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
-
 replace (
-	github.com/forevengetmathmmqqmm/goGinExample/go-gin-example/pkg/setting => ~/goGinExample/pkg/setting
-	github.com/forevengetmathmmqqmm/goGinExample/go-gin-example/conf          => ~/goGinExample/pkg/conf
-	github.com/forevengetmathmmqqmm/goGinExample/go-gin-example/middleware  => ~/goGinExample/middleware
-	github.com/forevengetmathmmqqmm/goGinExample/go-gin-example/models       => ~/goGinExample/models
-	github.com/forevengetmathmmqqmm/goGinExample/go-gin-example/routers       => ~/goGinExample/routers
+	github.com/forevengetmathmmqqmm/goGinExample/pkg/setting => ~/goGinExample/pkg/setting
 )
-
