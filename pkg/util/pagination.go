@@ -1,7 +1,7 @@
 package util
 
 import (
-	setting "github.com/forevengetmathmmqqmm/goGinExample/pkg"
+	"github.com/forevengetmathmmqqmm/goGinExample/pkg/setting"
 
 	"github.com/gin-gonic/gin"
 	"github.com/unknwon/com"

@@ -4,18 +4,17 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/forevengetmathmmqqmm/goGinExample/pkg/setting"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-
-	setting "github.com/forevengetmathmmqqmm/goGinExample/pkg"
 )
 
 var db *gorm.DB
 
 type Model struct {
-	ID         int `gorm:"primary_key" json:"id"`
-	CreatedOn  int `json:"created_on"`
-	ModifiedOn int `json:"modified_on"`
+	ID         int    `gorm:"primary_key" json:"id"`
+	CreatedOn  string `json:"created_on"`
+	ModifiedOn string `json:"modified_on"`
 }
 
 func init() {
