@@ -25,7 +25,10 @@ func Login(data Req) (user User) {
 	return
 }
 
-func HasUser(nickname string) (user User) {
-	db.Table("user").Where("nickname = ?", nickname).First(&user)
+func HasUser(key string, val interface{}) (user User) {
+	if key == "id" {
+
+	}
+	db.Table("user").Where(key+" = ?", val).First(&user)
 	return
 }

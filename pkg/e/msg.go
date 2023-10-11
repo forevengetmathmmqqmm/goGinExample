@@ -12,6 +12,7 @@ var MsgFlags = map[int]string{
 	ERROR_AUTH_TOKEN:               "Token生成失败",
 	ERROR_AUTH:                     "Token错误",
 	PASSWORD_FAIL:                  "密码错误",
+	USER_FAIL:                      "用户不存在",
 }
 
 func GetMsg(code int) string {

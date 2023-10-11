@@ -15,4 +15,5 @@ const (
 	ERROR_AUTH                     = 20004
 
 	PASSWORD_FAIL = 10004
+	USER_FAIL     = 10005
 )

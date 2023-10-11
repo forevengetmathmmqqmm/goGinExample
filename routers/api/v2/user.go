@@ -8,10 +8,11 @@ import (
 	"github.com/forevengetmathmmqqmm/goGinExample/pkg/e"
 	"github.com/forevengetmathmmqqmm/goGinExample/pkg/util"
 	"github.com/gin-gonic/gin"
+	"github.com/unknwon/com"
 )
 
 type Res struct {
-	models.User
+	Id    int    `json:"id"`
 	Token string `json:"token"`
 }
 
@@ -29,11 +30,11 @@ func Login(c *gin.Context) {
 		msg = valid.Errors[0].String()
 	} else {
 		token, _ := util.GenerateToken(req.Nickname, req.Password)
-		sqlData := models.HasUser(req.Nickname)
+		sqlData := models.HasUser("nickname", req.Nickname)
 		if sqlData.ID > 0 {
 			if req.Password == sqlData.Password {
 				data = Res{
-					sqlData,
+					sqlData.ID,
 					token,
 				}
 			} else {
@@ -43,7 +44,7 @@ func Login(c *gin.Context) {
 		} else {
 			sqlData := models.Login(req)
 			data = Res{
-				sqlData,
+				sqlData.ID,
 				token,
 			}
 		}
@@ -53,4 +54,21 @@ func Login(c *gin.Context) {
 		"msg":  msg,
 		"data": data,
 	})
+}
+func UserInfo(c *gin.Context) {
+
+}
+func GetUserDetail(c *gin.Context) {
+	id := com.StrTo(c.Param("id")).MustInt()
+	sqlData := models.HasUser("id", id)
+	var code = e.SUCCESS
+	if id < 0 {
+		code = e.USER_FAIL
+	}
+	c.JSON(http.StatusOK, gin.H{
+		"code": code,
+		"msg":  e.GetMsg(code),
+		"data": sqlData,
+	})
+
 }
