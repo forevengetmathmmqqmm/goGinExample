@@ -43,7 +43,7 @@ func UploadFile(c *gin.Context) {
 		c.JSON(500, gin.H{"message": "文件保存失败"})
 		return
 	}
-	savedFilePath := "images/" + file.Filename
+	savedFilePath := "/images/" + file.Filename
 	var res UploadRes
 	res = UploadRes{
 		Path: savedFilePath,

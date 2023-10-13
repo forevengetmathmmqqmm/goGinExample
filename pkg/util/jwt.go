@@ -1,14 +1,17 @@
 package util
 
 import (
+	"errors"
 	"time"
 
 	jwt "github.com/dgrijalva/jwt-go"
 
+	"github.com/forevengetmathmmqqmm/goGinExample/pkg/e"
 	"github.com/forevengetmathmmqqmm/goGinExample/pkg/setting"
 )
 
 var jwtSecret = []byte(setting.JwtSecret)
+var Blacklist = make(map[string]bool)
 
 type Claims struct {
 	Nickname string `json:"nickname"`
@@ -42,7 +45,12 @@ func ParseToken(token string) (*Claims, error) {
 
 	if tokenClaims != nil {
 		if claims, ok := tokenClaims.Claims.(*Claims); ok && tokenClaims.Valid {
-			return claims, nil
+			if Blacklist[claims.Nickname] {
+				return claims, nil
+			} else {
+				err := errors.New(e.GetMsg(e.ERROR_AUTH_CHECK_TOKEN_FAIL))
+				return claims, err
+			}
 		}
 	}
 

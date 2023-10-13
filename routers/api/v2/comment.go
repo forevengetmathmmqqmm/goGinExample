@@ -9,7 +9,7 @@ import (
 )
 
 func DrawImg(c *gin.Context) {
-	imgUrl := util.DrawImg()
+	imgUrl := util.DrawImg("lc")
 	c.JSON(http.StatusOK, gin.H{
 		"code": e.SUCCESS,
 		"data": imgUrl,
