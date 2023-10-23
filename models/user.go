@@ -1,7 +1,6 @@
 package models
 
 import (
-	"fmt"
 	"time"
 )
 
@@ -15,6 +14,10 @@ type User struct {
 	Address       string `json:"address"`
 	Intro         string `json:"intro"`
 	Avatar        string `json:"avatar"`
+}
+type UserInfo struct {
+	User
+	Keystore string `json:"keystore"`
 }
 type Web3 struct {
 	Model
@@ -57,6 +60,13 @@ func HasUser(key string, val interface{}) (user User) {
 	return
 }
 
+func GetUser(key string, val interface{}) (userInfo UserInfo) {
+	db.Table("user").Select(
+		"user.id,user.created_on,user.modified_on,user.nickname,user.password,user.phone,user.email,user.wallet_address,user.address,user.intro,user.avatar,web3.keystore").Joins(
+		"left join web3 on web3.user_id = user.id").First(&userInfo)
+	return
+}
+
 func UpdateUser(data RespUser) (user ResUser) {
 	data.ModifiedOn = time.Now().Format("2006-01-02 15:04:05")
 	db.Table("user").Save(&data)
@@ -68,6 +78,10 @@ type WalletResp struct {
 	WalletAddress string `json:"wallet_address" form:"wallet_address"`
 	Keystore      string `json:"keystore" form:"keystore"`
 }
+type UserWallet struct {
+	ID            int    `gorm:"primary_key" json:"id"`
+	WalletAddress string `json:"wallet_address"`
+}
 
 func UpdateWallet(data WalletResp, userId int) {
 	var web3 Web3
@@ -75,10 +89,9 @@ func UpdateWallet(data WalletResp, userId int) {
 	web3.CreatedOn = time.Now().Format("2006-01-02 15:04:05")
 	web3.UserId = userId
 	db.Table("web3").Create(&web3)
-	user := map[string]interface{}{
-		"WalletAddress": data.WalletAddress,
-		"ID":            userId,
+	user := UserWallet{
+		WalletAddress: data.WalletAddress,
+		ID:            userId,
 	}
-	fmt.Print(">>>>user", user)
 	db.Table("user").Save(&user)
 }

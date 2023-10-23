@@ -82,7 +82,7 @@ func SetUserInfo(c *gin.Context) {
 
 func GetUserDetail(c *gin.Context) {
 	id := com.StrTo(c.Param("id")).MustInt()
-	sqlData := models.HasUser("id", id)
+	sqlData := models.GetUser("id", id)
 	var code = e.SUCCESS
 	if id < 0 {
 		code = e.USER_FAIL
