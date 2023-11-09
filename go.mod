@@ -54,6 +54,7 @@ replace (
 	github.com/forevengetmathmmqqmm/goGinExample/middleware/jwt => ./goGinExample/middleware/jwt
 	github.com/forevengetmathmmqqmm/goGinExample/models => ./goGinExample/models
 	github.com/forevengetmathmmqqmm/goGinExample/pkg/e => ./goGinExample/pkg/e
+	github.com/forevengetmathmmqqmm/goGinExample/pkg/app => ./goGinExample/pkg/app
 	github.com/forevengetmathmmqqmm/goGinExample/pkg/setting => ./goGinExample/pkg/setting
 	github.com/forevengetmathmmqqmm/goGinExample/pkg/util => ./goGinExample/pkg/util
 	github.com/forevengetmathmmqqmm/goGinExample/routers => ./goGinExample/routers

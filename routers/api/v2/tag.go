@@ -15,15 +15,6 @@ import (
 	"github.com/forevengetmathmmqqmm/goGinExample/pkg/util"
 )
 
-func Test2(c *gin.Context) {
-	fmt.Println("sssss")
-	c.JSON(http.StatusOK, gin.H{
-		"code": e.SUCCESS,
-		"msg":  e.GetMsg(e.SUCCESS),
-		"data": "test-success",
-	})
-}
-
 // 获取多个文章标签
 func GetTags(c *gin.Context) {
 	name := c.Query("name")

@@ -38,10 +38,18 @@ type RespUser struct {
 	Intro         string `json:"intro"`
 	Avatar        string `json:"avatar"`
 	ModifiedOn    string `json:"modified_on"`
+	CreatedOn     string `json:"create_on"`
 }
 type Req struct {
 	Nickname string `json:"nickname" form:"nickname"`
 	Password string `json:"password" form:"password"`
+}
+
+type UserListParams struct {
+	Phone    string
+	ID       int
+	Nickname string
+	Email    string
 }
 
 func Login(data Req) (user User) {
@@ -56,7 +64,7 @@ func Login(data Req) (user User) {
 }
 
 func HasUser(key string, val interface{}) (user User) {
-	db.Table("user").Where(key+" = ?", val).First(&user)
+	db.Table("user").Where(key+" = ?", val).Limit(10).First(&user)
 	return
 }
 
@@ -64,6 +72,12 @@ func GetUser(key string, val interface{}) (userInfo UserInfo) {
 	db.Table("user").Select(
 		"user.id,user.created_on,user.modified_on,user.nickname,user.password,user.phone,user.email,user.wallet_address,user.address,user.intro,user.avatar,web3.keystore").Joins(
 		"left join web3 on web3.user_id = user.id").First(&userInfo)
+	return
+}
+
+// 获取用户列表
+func GetUserList() (userList []RespUser) {
+	db.Table("user").Offset(0).Limit(10).Find(&userList)
 	return
 }
 

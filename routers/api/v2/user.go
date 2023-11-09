@@ -5,6 +5,7 @@ import (
 
 	"github.com/astaxie/beego/validation"
 	"github.com/forevengetmathmmqqmm/goGinExample/models"
+	"github.com/forevengetmathmmqqmm/goGinExample/pkg/app"
 	"github.com/forevengetmathmmqqmm/goGinExample/pkg/e"
 	"github.com/forevengetmathmmqqmm/goGinExample/pkg/util"
 	"github.com/gin-gonic/gin"
@@ -91,6 +92,16 @@ func GetUserDetail(c *gin.Context) {
 		"code": code,
 		"msg":  e.GetMsg(code),
 		"data": sqlData,
+	})
+}
+
+// 获取用户列表
+func GetUserList(c *gin.Context) {
+	appG := app.Gin{C: c}
+	sqlData := models.GetUserList()
+	appG.Response(http.StatusOK, e.SUCCESS, e.GetMsg(e.SUCCESS), map[string]interface{}{
+		"list":  sqlData,
+		"total": 10,
 	})
 }
 func Logout(c *gin.Context) {
