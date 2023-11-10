@@ -38,6 +38,22 @@ func InitRouter() *gin.Engine {
 			musicianApi.GET("/list", v2.MusicianList)
 			musicianApi.GET("/detail/:id", v2.MusicianDetail)
 		}
+		activityApi := apiV2.Group("/activity")
+		{
+			activityApi.POST("/add", v2.AddActivity)
+			activityApi.POST("/edit", v2.EditActivity)
+			activityApi.DELETE("/del/:id", v2.DelActivity)
+			activityApi.GET("/list", v2.ActivityList)
+			activityApi.GET("/detail/:id", v2.ActivityDetail)
+		}
+		bannerApi := apiV2.Group("/banner")
+		{
+			bannerApi.POST("/add", v2.AddActivity)
+			bannerApi.POST("/edit", v2.EditActivity)
+			bannerApi.DELETE("/del/:id", v2.DelActivity)
+			bannerApi.GET("/list", v2.ActivityList)
+			bannerApi.GET("/detail/:id", v2.ActivityDetail)
+		}
 	}
 	return r
 }

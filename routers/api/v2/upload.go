@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/forevengetmathmmqqmm/goGinExample/pkg/app"
 	"github.com/forevengetmathmmqqmm/goGinExample/pkg/e"
 	"github.com/gin-gonic/gin"
 	"github.com/nfnt/resize"
@@ -16,6 +17,7 @@ type UploadRes struct {
 }
 
 func UploadFile(c *gin.Context) {
+	appG := app.Gin{C: c}
 	// 从请求中获取上传的文件
 	file, err := c.FormFile("file")
 	if err != nil {
@@ -24,13 +26,13 @@ func UploadFile(c *gin.Context) {
 	}
 	uploadedFile, err := file.Open()
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"message": "文件无法打开"})
+		appG.Response(http.StatusInternalServerError, 500, "文件无法打开", nil)
 		return
 	}
 	defer uploadedFile.Close()
 	img, _, err := image.Decode(uploadedFile)
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"message": "无法解码图像"})
+		appG.Response(http.StatusInternalServerError, 500, "无法解码图像", nil)
 		return
 	}
 	targetWidth := 200
@@ -40,7 +42,7 @@ func UploadFile(c *gin.Context) {
 	outputFile, err := os.Create("uploads/" + file.Filename)
 	err = jpeg.Encode(outputFile, resizedImg, nil)
 	if err != nil {
-		c.JSON(500, gin.H{"message": "文件保存失败"})
+		appG.Response(http.StatusInternalServerError, 500, "文件保存失败", nil)
 		return
 	}
 	savedFilePath := "/images/" + file.Filename
@@ -48,9 +50,5 @@ func UploadFile(c *gin.Context) {
 	res = UploadRes{
 		Path: savedFilePath,
 	}
-	c.JSON(http.StatusOK, gin.H{
-		"code": e.SUCCESS,
-		"msg":  "文件上传成功",
-		"data": res,
-	})
+	appG.Response(http.StatusOK, e.SUCCESS, e.GetMsg(e.SUCCESS), res)
 }
