@@ -27,17 +27,14 @@ func AddBanner(data AddBannerRequest) (banner Banner, err error) {
 }
 
 type EditBannerRequest struct {
-	Id             int    `json:"id"`
-	Name           string `json:"name"`
-	ImgUrl         string `json:"img_url"`
-	Status         int    `json:"status"`
-	IsOkApply      int    `json:"is_ok_apply"`
-	ActivityStart  string `json:"activity_start"`
-	ActivityEnd    string `json:"activity_end"`
-	Type           int    `json:"type"`
-	Num            int    `json:"num"`
-	InitialVoucher int    `json:"initial_voucher"`
-	UpdateAt       string `json:"update_at"`
+	Id         int    `json:"id"`
+	Name       string `json:"name"`
+	ImgUrl     string `json:"img_url"`
+	Status     int    `json:"status"`
+	Link       int    `json:"link"`
+	JumpType   int    `json:"jump_type"`
+	ActivityId string `json:"activity_id"`
+	Type       int    `json:"type"`
 }
 
 func EditBanner(data EditActivityRequest) (activity Activity, err error) {

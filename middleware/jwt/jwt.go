@@ -14,7 +14,7 @@ func JWT() gin.HandlerFunc {
 	return func(c *gin.Context) {
 		var code int
 		var data interface{}
-		filterUrl := []string{"/api/v2/user/login", "/api/v2/comment/uploads"}
+		filterUrl := []string{"/api/user/login", "/api/comment/uploads"}
 		url := c.Request.URL
 		for _, value := range filterUrl {
 			if value == url.String() {

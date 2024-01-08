@@ -53,10 +53,16 @@ require (
 replace (
 	github.com/forevengetmathmmqqmm/goGinExample/middleware/jwt => ./goGinExample/middleware/jwt
 	github.com/forevengetmathmmqqmm/goGinExample/models => ./goGinExample/models
+	github.com/forevengetmathmmqqmm/goGinExample/server/system => ./goGinExample/server/system
+	github.com/forevengetmathmmqqmm/goGinExample/initialize => ./goGinExample/initialize
+	github.com/forevengetmathmmqqmm/goGinExample/models/system => ./goGinExample/models/system
 	github.com/forevengetmathmmqqmm/goGinExample/pkg/e => ./goGinExample/pkg/e
 	github.com/forevengetmathmmqqmm/goGinExample/pkg/app => ./goGinExample/pkg/app
 	github.com/forevengetmathmmqqmm/goGinExample/pkg/setting => ./goGinExample/pkg/setting
 	github.com/forevengetmathmmqqmm/goGinExample/pkg/util => ./goGinExample/pkg/util
 	github.com/forevengetmathmmqqmm/goGinExample/routers => ./goGinExample/routers
+	github.com/forevengetmathmmqqmm/goGinExample/routers/system => ./goGinExample/routers/system
 	github.com/forevengetmathmmqqmm/goGinExample/routers/api/v2 => ./goGinExample/routers/api/v2
+	github.com/forevengetmathmmqqmm/goGinExample/api => ./goGinExample/api
+	github.com/forevengetmathmmqqmm/goGinExample/api/v1/system => ./goGinExample/api/v1/system
 )
