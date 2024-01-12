@@ -15,8 +15,25 @@ func GetUserInfoId(id int) (user system.User, err error) {
 	return user, err
 }
 
+type DelUserResponse struct {
+	Id int `json:"id"`
+}
+
+func DelUserInfoId(id int) (err error) {
+	delData := DelUserResponse{
+		Id: id,
+	}
+	err = global.GAV_DB.Table("user").Delete(&delData).Error
+	return err
+}
+
 func EditUser(params system.EditUserApi) (user system.User, err error) {
 	err = global.GAV_DB.Table("user").Save(&params).First(&user, params.ID).Error
+	return user, err
+}
+
+func AddUser(params system.AddUserApi) (user system.User, err error) {
+	err = global.GAV_DB.Table("user").Create(&params).Find(&user, "nickname = ?", params.Nickname).Error
 	return user, err
 }
 

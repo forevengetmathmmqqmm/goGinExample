@@ -14,7 +14,7 @@ type User struct {
 	Address       string `json:"address"`
 	Intro         string `json:"intro"`
 	Avatar        string `json:"avatar"`
-	RoleId        string `json:"role_id"`
+	RoleId        int    `json:"role_id"`
 	IsSuper       string `json:"is_super"`
 }
 
@@ -37,6 +37,20 @@ type EditUserApi struct {
 	Intro      string `json:"intro"`
 	Avatar     string `json:"avatar"`
 	ModifiedOn string `json:"modified_on"`
+	RoleId     int    `json:"role_id"`
+	Password   string `json:"password"`
+}
+
+type AddUserApi struct {
+	Nickname  string `json:"nickname"`
+	Phone     string `json:"phone"`
+	Email     string `json:"email"`
+	Address   string `json:"address"`
+	Intro     string `json:"intro"`
+	Avatar    string `json:"avatar"`
+	CreatedOn string `json:"modified_on"`
+	RoleId    int    `json:"role_id"`
+	Password  string `json:"password"`
 }
 
 type UserListResp struct {
@@ -50,6 +64,6 @@ type UserListResp struct {
 	Avatar        string `json:"avatar"`
 	ModifiedOn    string `json:"modified_on"`
 	CreatedOn     string `json:"create_on"`
-	RoleId        string `json:"role_id"`
+	RoleId        int    `json:"role_id"`
 	IsSuper       string `json:"is_super"`
 }

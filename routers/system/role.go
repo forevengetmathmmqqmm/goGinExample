@@ -2,7 +2,6 @@ package system
 
 import (
 	v1 "github.com/forevengetmathmmqqmm/goGinExample/api/v1"
-	v2 "github.com/forevengetmathmmqqmm/goGinExample/routers/api/v2"
 	"github.com/gin-gonic/gin"
 )
 
@@ -13,8 +12,8 @@ func (m *RoleRouter) InitRoleRouter(Router *gin.RouterGroup) {
 	roleApi := v1.ApiGroupApp.SystemApiGroup.RoleApiGroup
 	{
 		apiRouter.POST("edit", roleApi.AddRole)
-		apiRouter.DELETE("del/:id", v2.DelMusician)
+		apiRouter.DELETE("del/:id", roleApi.DelRoleInfoId)
 		apiRouter.GET("list", roleApi.GetRoleList)
-		apiRouter.GET("detail/:id", v2.MusicianDetail)
+		apiRouter.GET("detail/:id", roleApi.GetRoleDetail)
 	}
 }

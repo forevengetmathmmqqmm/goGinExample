@@ -82,6 +82,19 @@ func (u *UserApiGroup) GetUserDetail(c *gin.Context) {
 	response.OkWithData(user, c)
 }
 
+func (u *UserApiGroup) DelUserDetail(c *gin.Context) {
+	id := com.StrTo(c.Param("id")).MustInt()
+	if id == 0 {
+		response.FailWithMessage("用户id为空", c)
+	}
+	err := server_system.DelUserInfoId(id)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	response.Ok(c)
+}
+
 // 编辑用户信息
 func (u *UserApiGroup) EditUser(c *gin.Context) {
 	var params system.EditUserApi
@@ -96,6 +109,27 @@ func (u *UserApiGroup) EditUser(c *gin.Context) {
 	}
 	params.ModifiedOn = time.Now().Format("2006-01-02 15:04:05")
 	user, err := server_system.EditUser(params)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	response.OkWithData(user, c)
+}
+
+// 编辑用户信息
+func (u *UserApiGroup) AddUser(c *gin.Context) {
+	var params system.AddUserApi
+	err := c.ShouldBind(&params)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+	}
+	err = utils.Verify(params, utils.AddUserVerify)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	params.CreatedOn = time.Now().Format("2006-01-02 15:04:05")
+	user, err := server_system.AddUser(params)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return

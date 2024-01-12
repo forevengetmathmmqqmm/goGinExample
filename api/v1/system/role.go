@@ -8,9 +8,37 @@ import (
 	server_system "github.com/forevengetmathmmqqmm/goGinExample/server/system"
 	"github.com/forevengetmathmmqqmm/goGinExample/utils"
 	"github.com/gin-gonic/gin"
+	"github.com/unknwon/com"
 )
 
 type RoleApiGroup struct{}
+
+// 获取角色详情
+func (u *RoleApiGroup) GetRoleDetail(c *gin.Context) {
+	id := com.StrTo(c.Param("id")).MustInt()
+	if id == 0 {
+		response.FailWithMessage("角色id为空", c)
+	}
+	user, err := server_system.GetRole(id)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	response.OkWithData(user, c)
+}
+
+func (r *RoleApiGroup) DelRoleInfoId(c *gin.Context) {
+	id := com.StrTo(c.Param("id")).MustInt()
+	if id == 0 {
+		response.FailWithMessage("角色id为空", c)
+	}
+	err := server_system.DelRoleId(id)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	response.Ok(c)
+}
 
 // 编辑添加角色
 func (r *RoleApiGroup) AddRole(c *gin.Context) {
