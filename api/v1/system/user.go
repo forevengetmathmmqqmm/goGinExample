@@ -116,7 +116,7 @@ func (u *UserApiGroup) EditUser(c *gin.Context) {
 	response.OkWithData(user, c)
 }
 
-// 编辑用户信息
+// 添加用户信息
 func (u *UserApiGroup) AddUser(c *gin.Context) {
 	var params system.AddUserApi
 	err := c.ShouldBind(&params)
