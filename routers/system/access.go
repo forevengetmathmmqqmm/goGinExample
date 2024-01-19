@@ -17,10 +17,10 @@ func (a *AccessRouter) InitAccessRouter(Router *gin.RouterGroup) {
 		apiRouter.GET("parent/list", accessApi.GetParentAccessListApi)
 		apiRouter.GET("parent/detail/:id", accessApi.GetParentAccessDetail)
 
-		apiRouter.POST("add", accessApi.AddParentAccessApi)
-		apiRouter.POST("edit", accessApi.EditParentAccessApi)
-		apiRouter.DELETE("del/:id", accessApi.DelParentAccessApi)
-		apiRouter.GET("list", accessApi.GetParentAccessListApi)
-		apiRouter.GET("detail/:id", accessApi.GetParentAccessDetail)
+		apiRouter.POST("add", accessApi.AddAccessApi)
+		apiRouter.POST("edit", accessApi.EditAccessApi)
+		apiRouter.DELETE("del/:id", accessApi.DelAccessApi)
+		apiRouter.GET("list", accessApi.GetAccessListApi)
+		apiRouter.GET("detail/:id", accessApi.GetAccessDetail)
 	}
 }

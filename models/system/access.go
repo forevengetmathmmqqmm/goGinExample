@@ -14,16 +14,6 @@ type ParentAccess struct {
 	HasChildren int    `json:"has_children"`
 }
 
-type Access struct {
-	global.Model
-	Path        string `json:"path"`
-	Icon        string `json:"icon"`
-	Show        int    `json:"show"`
-	Name        string `json:"name"`
-	ElPath      string `json:"el_path"`
-	HasChildren int    `json:"has_children"`
-}
-
 type RoleAccess struct {
 	global.Model
 	AccessId int `json:"access_id"`
@@ -51,4 +41,50 @@ type AddParentAccess struct {
 	ElPath      string `json:"el_path"`
 	HasChildren int    `json:"has_children"`
 	CreatedOn   string `json:"created_on"`
+}
+
+type Access struct {
+	global.Model
+	Path           string `json:"path"`
+	Icon           string `json:"icon"`
+	Show           int    `json:"show"`
+	Name           string `json:"name"`
+	ElPath         string `json:"el_path"`
+	RoleId         []int  `json:"role_id"`
+	ParentRouterId int    `json:"parent_router_id"`
+}
+
+// 编辑
+type EditAccessParams struct {
+	EditAccess
+	RoleId []int `json:"role_id"`
+}
+
+// 编辑
+type EditAccess struct {
+	ID             int    `json:"id"`
+	Path           string `json:"path"`
+	Icon           string `json:"icon"`
+	Show           int    `json:"show"`
+	Name           string `json:"name"`
+	ElPath         string `json:"el_path"`
+	ModifiedOn     string `json:"modified_on"`
+	ParentRouterId int    `json:"parent_router_id"`
+}
+
+// 添加
+type AddAccess struct {
+	Path           string `json:"path"`
+	Icon           string `json:"icon"`
+	Show           int    `json:"show"`
+	Name           string `json:"name"`
+	ElPath         string `json:"el_path"`
+	ParentRouterId int    `json:"parent_router_id"`
+	CreatedOn      string `json:"created_on"`
+}
+
+// 添加
+type AddAccessParams struct {
+	AddAccess
+	RoleId []int `json:"role_id"`
 }
