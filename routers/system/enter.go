@@ -7,6 +7,7 @@ type RoutersTrc struct {
 	ActivityRouter
 	BannerRouter
 	RoleRouter
+	AccessRouter
 }
 
 var Routers *RoutersTrc

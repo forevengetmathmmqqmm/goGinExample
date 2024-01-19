@@ -23,5 +23,6 @@ func InitRouter() *gin.Engine {
 	system.Routers.InitActivityRouter(apiV2)
 	system.Routers.InitBannerRouter(apiV2)
 	system.Routers.InitRoleRouter(apiV2)
+	system.Routers.InitAccessRouter(apiV2)
 	return r
 }
