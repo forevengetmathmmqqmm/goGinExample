@@ -15,9 +15,10 @@ type ParentAccess struct {
 }
 
 type RoleAccess struct {
-	global.Model
-	AccessId int `json:"access_id"`
-	RoleId   int `json:"role_id"`
+	AccessId   int    `json:"access_id"`
+	RoleId     int    `json:"role_id"`
+	CreatedOn  string `json:"created_on"`
+	ModifiedOn string `json:"modified_on"`
 }
 
 // 编辑
@@ -50,7 +51,7 @@ type Access struct {
 	Show           int    `json:"show"`
 	Name           string `json:"name"`
 	ElPath         string `json:"el_path"`
-	RoleId         []int  `json:"role_id"`
+	RoleIds        []int  `json:"role_ids"`
 	ParentRouterId int    `json:"parent_router_id"`
 }
 

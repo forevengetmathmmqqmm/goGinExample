@@ -1,5 +1,7 @@
 package models
 
+import "github.com/forevengetmathmmqqmm/goGinExample/global"
+
 type Tag struct {
 	Model
 
@@ -10,19 +12,19 @@ type Tag struct {
 }
 
 func GetTags(pageNum int, pageSize int, maps interface{}) (tags []Tag) {
-	db.Where(maps).Offset(pageNum).Limit(pageSize).Find(&tags)
+	global.GAV_DB.Where(maps).Offset(pageNum).Limit(pageSize).Find(&tags)
 
 	return
 }
 
-func GetTagTotal(maps interface{}) (count int) {
-	db.Model(&Tag{}).Where(maps).Count(&count)
+func GetTagTotal(maps interface{}) (count int64) {
+	global.GAV_DB.Model(&Tag{}).Where(maps).Count(&count)
 
 	return
 }
 func ExistTagByName(name string) bool {
 	var tag Tag
-	db.Select("id").Where("name = ?", name).First(&tag)
+	global.GAV_DB.Select("id").Where("name = ?", name).First(&tag)
 	if tag.ID > 0 {
 		return true
 	}
@@ -31,7 +33,7 @@ func ExistTagByName(name string) bool {
 }
 
 func AddTag(name string, state int, createdBy string) bool {
-	db.Create(&Tag{
+	global.GAV_DB.Create(&Tag{
 		Name:      name,
 		State:     state,
 		CreatedBy: createdBy,
@@ -41,7 +43,7 @@ func AddTag(name string, state int, createdBy string) bool {
 }
 func ExistTagByID(id int) bool {
 	var tag Tag
-	db.Select("id").Where("id = ?", id).First(&tag)
+	global.GAV_DB.Select("id").Where("id = ?", id).First(&tag)
 	if tag.ID > 0 {
 		return true
 	}
@@ -50,13 +52,13 @@ func ExistTagByID(id int) bool {
 }
 
 func DeleteTag(id int) bool {
-	db.Where("id = ?", id).Delete(&Tag{})
+	global.GAV_DB.Where("id = ?", id).Delete(&Tag{})
 
 	return true
 }
 
 func EditTag(id int, data interface{}) bool {
-	db.Model(&Tag{}).Where("id = ?", id).Updates(data)
+	global.GAV_DB.Model(&Tag{}).Where("id = ?", id).Updates(data)
 
 	return true
 }

@@ -11,13 +11,18 @@ require (
 )
 
 require (
+	github.com/go-sql-driver/mysql v1.7.0 // indirect
 	github.com/golang/freetype v0.0.0-20170609003504-e2365dfdc4a0 // indirect
 	github.com/google/go-cmp v0.5.9 // indirect
 	github.com/jinzhu/inflection v1.0.0 // indirect
+	github.com/jinzhu/now v1.1.5 // indirect
 	github.com/kr/text v0.2.0 // indirect
+	github.com/mattn/go-sqlite3 v2.0.3+incompatible // indirect
 	github.com/nfnt/resize v0.0.0-20180221191011-83c6a9932646 // indirect
 	github.com/shiena/ansicolor v0.0.0-20230509054315-a9deabde6e02 // indirect
 	golang.org/x/image v0.13.0 // indirect
+	gorm.io/driver/sqlite v1.5.5 // indirect
+	gorm.io/gorm v1.25.7 // indirect
 )
 
 require (
@@ -29,9 +34,7 @@ require (
 	github.com/go-playground/locales v0.14.1 // indirect
 	github.com/go-playground/universal-translator v0.18.1 // indirect
 	github.com/go-playground/validator/v10 v10.14.0 // indirect
-	github.com/go-sql-driver/mysql v1.7.1 // indirect
 	github.com/goccy/go-json v0.10.2 // indirect
-	github.com/jinzhu/gorm v1.9.16
 	github.com/json-iterator/go v1.1.12 // indirect
 	github.com/klauspost/cpuid/v2 v2.2.4 // indirect
 	github.com/leodido/go-urn v1.2.4 // indirect
@@ -48,21 +51,22 @@ require (
 	golang.org/x/text v0.13.0 // indirect
 	google.golang.org/protobuf v1.31.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
+	gorm.io/driver/mysql v1.5.4
 )
 
 replace (
+	github.com/forevengetmathmmqqmm/goGinExample/api => ./goGinExample/api
+	github.com/forevengetmathmmqqmm/goGinExample/api/v1/system => ./goGinExample/api/v1/system
+	github.com/forevengetmathmmqqmm/goGinExample/initialize => ./goGinExample/initialize
 	github.com/forevengetmathmmqqmm/goGinExample/middleware/jwt => ./goGinExample/middleware/jwt
 	github.com/forevengetmathmmqqmm/goGinExample/models => ./goGinExample/models
-	github.com/forevengetmathmmqqmm/goGinExample/server/system => ./goGinExample/server/system
-	github.com/forevengetmathmmqqmm/goGinExample/initialize => ./goGinExample/initialize
 	github.com/forevengetmathmmqqmm/goGinExample/models/system => ./goGinExample/models/system
-	github.com/forevengetmathmmqqmm/goGinExample/pkg/e => ./goGinExample/pkg/e
 	github.com/forevengetmathmmqqmm/goGinExample/pkg/app => ./goGinExample/pkg/app
+	github.com/forevengetmathmmqqmm/goGinExample/pkg/e => ./goGinExample/pkg/e
 	github.com/forevengetmathmmqqmm/goGinExample/pkg/setting => ./goGinExample/pkg/setting
 	github.com/forevengetmathmmqqmm/goGinExample/pkg/util => ./goGinExample/pkg/util
 	github.com/forevengetmathmmqqmm/goGinExample/routers => ./goGinExample/routers
-	github.com/forevengetmathmmqqmm/goGinExample/routers/system => ./goGinExample/routers/system
 	github.com/forevengetmathmmqqmm/goGinExample/routers/api/v2 => ./goGinExample/routers/api/v2
-	github.com/forevengetmathmmqqmm/goGinExample/api => ./goGinExample/api
-	github.com/forevengetmathmmqqmm/goGinExample/api/v1/system => ./goGinExample/api/v1/system
+	github.com/forevengetmathmmqqmm/goGinExample/routers/system => ./goGinExample/routers/system
+	github.com/forevengetmathmmqqmm/goGinExample/server/system => ./goGinExample/server/system
 )

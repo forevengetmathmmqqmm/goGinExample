@@ -1,6 +1,10 @@
 package models
 
-import "time"
+import (
+	"time"
+
+	"github.com/forevengetmathmmqqmm/goGinExample/global"
+)
 
 type Activity struct {
 	Id int `json:"id"`
@@ -24,7 +28,7 @@ type AddActivityRequest struct {
 func AddActivity(data AddActivityRequest) (activity Activity, err error) {
 	activity.AddActivityRequest = data
 	activity.CreateAt = time.Now().Format("2006-01-02 15:04:05")
-	err = db.Table("activity").Create(&activity).Error
+	err = global.GAV_DB.Table("activity").Create(&activity).Error
 	return activity, err
 }
 
@@ -44,12 +48,12 @@ type EditActivityRequest struct {
 
 func EditActivity(data EditActivityRequest) (activity Activity, err error) {
 	data.UpdateAt = time.Now().Format("2006-01-02 15:04:05")
-	db.Table("activity").Save(&data).Where("id = ?", data.Id).First(&activity)
+	global.GAV_DB.Table("activity").Save(&data).Where("id = ?", data.Id).First(&activity)
 	return activity, err
 }
 
 func GetActivityDetail(id int) (activity Activity, err error) {
-	db.Table("activity").Where("id = ?", id).First(&activity)
+	global.GAV_DB.Table("activity").Where("id = ?", id).First(&activity)
 	return
 }
 
@@ -61,8 +65,8 @@ type ActivityListRequest struct {
 }
 
 func GetActivityList() (activity []Activity, count int64, err error) {
-	db.Table("activity").Count(&count)
-	db.Table("activity").Offset(0).Limit(10).Find(&activity)
+	global.GAV_DB.Table("activity").Count(&count)
+	global.GAV_DB.Table("activity").Offset(0).Limit(10).Find(&activity)
 	return
 }
 
@@ -74,6 +78,6 @@ func DelActivity(id int) (err error) {
 	delData := DelActivityResponse{
 		Id: id,
 	}
-	db.Table("activity").Delete(&delData)
+	global.GAV_DB.Table("activity").Delete(&delData)
 	return
 }

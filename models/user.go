@@ -2,6 +2,8 @@ package models
 
 import (
 	"time"
+
+	"github.com/forevengetmathmmqqmm/goGinExample/global"
 )
 
 type User struct {
@@ -53,7 +55,7 @@ type UserListParams struct {
 }
 
 func Login(data Req) (user User) {
-	db.Table("user").Create(&User{
+	global.GAV_DB.Table("user").Create(&User{
 		Model: Model{
 			CreatedOn: time.Now().Format("2006-01-02 15:04:05"),
 		},
@@ -64,12 +66,12 @@ func Login(data Req) (user User) {
 }
 
 func HasUser(key string, val interface{}) (user User) {
-	db.Table("user").Where(key+" = ?", val).Limit(10).First(&user)
+	global.GAV_DB.Table("user").Where(key+" = ?", val).Limit(10).First(&user)
 	return
 }
 
 func GetUser(key string, val interface{}) (userInfo UserInfo) {
-	db.Table("user").Select(
+	global.GAV_DB.Table("user").Select(
 		"user.id,user.created_on,user.modified_on,user.nickname,user.password,user.phone,user.email,user.wallet_address,user.address,user.intro,user.avatar,web3.keystore").Joins(
 		"left join web3 on web3.user_id = user.id").First(&userInfo)
 	return
@@ -77,14 +79,14 @@ func GetUser(key string, val interface{}) (userInfo UserInfo) {
 
 // 获取用户列表
 func GetUserList() (userList []RespUser) {
-	db.Table("user").Offset(0).Limit(10).Find(&userList)
+	global.GAV_DB.Table("user").Offset(0).Limit(10).Find(&userList)
 	return
 }
 
 func UpdateUser(data RespUser) (user ResUser) {
 	data.ModifiedOn = time.Now().Format("2006-01-02 15:04:05")
-	db.Table("user").Save(&data)
-	db.Table("user").First(&user, data.ID)
+	global.GAV_DB.Table("user").Save(&data)
+	global.GAV_DB.Table("user").First(&user, data.ID)
 	return
 }
 
@@ -102,10 +104,10 @@ func UpdateWallet(data WalletResp, userId int) {
 	web3.WalletResp = data
 	web3.CreatedOn = time.Now().Format("2006-01-02 15:04:05")
 	web3.UserId = userId
-	db.Table("web3").Create(&web3)
+	global.GAV_DB.Table("web3").Create(&web3)
 	user := UserWallet{
 		WalletAddress: data.WalletAddress,
 		ID:            userId,
 	}
-	db.Table("user").Save(&user)
+	global.GAV_DB.Table("user").Save(&user)
 }

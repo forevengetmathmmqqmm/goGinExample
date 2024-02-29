@@ -1,6 +1,10 @@
 package models
 
-import "time"
+import (
+	"time"
+
+	"github.com/forevengetmathmmqqmm/goGinExample/global"
+)
 
 type Banner struct {
 	Id int `json:"id"`
@@ -22,7 +26,7 @@ type AddBannerRequest struct {
 func AddBanner(data AddBannerRequest) (banner Banner, err error) {
 	banner.AddBannerRequest = data
 	banner.CreateAt = time.Now().Format("2006-01-02 15:04:05")
-	err = db.Table("banner").Create(&banner).Error
+	err = global.GAV_DB.Table("banner").Create(&banner).Error
 	return banner, err
 }
 
@@ -39,12 +43,12 @@ type EditBannerRequest struct {
 
 func EditBanner(data EditActivityRequest) (activity Activity, err error) {
 	data.UpdateAt = time.Now().Format("2006-01-02 15:04:05")
-	db.Table("activity").Save(&data).Where("id = ?", data.Id).First(&activity)
+	global.GAV_DB.Table("activity").Save(&data).Where("id = ?", data.Id).First(&activity)
 	return activity, err
 }
 
 func GetBannerDetail(id int) (activity Activity, err error) {
-	db.Table("activity").Where("id = ?", id).First(&activity)
+	global.GAV_DB.Table("activity").Where("id = ?", id).First(&activity)
 	return
 }
 
@@ -56,8 +60,8 @@ type BannerListRequest struct {
 }
 
 func GetBannerList() (activity []Activity, count int64, err error) {
-	db.Table("activity").Count(&count)
-	db.Table("activity").Offset(0).Limit(10).Find(&activity)
+	global.GAV_DB.Table("activity").Count(&count)
+	global.GAV_DB.Table("activity").Offset(0).Limit(10).Find(&activity)
 	return
 }
 
@@ -69,6 +73,6 @@ func DelBanner(id int) (err error) {
 	delData := DelActivityResponse{
 		Id: id,
 	}
-	db.Table("activity").Delete(&delData)
+	global.GAV_DB.Table("activity").Delete(&delData)
 	return
 }

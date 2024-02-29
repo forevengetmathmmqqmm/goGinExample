@@ -38,7 +38,7 @@ func AddUser(params system.AddUserApi) (user system.User, err error) {
 }
 
 // 获取用户列表
-func GetUserList() (userList []system.UserListResp, count int, err error) {
+func GetUserList() (userList []system.UserListResp, count int64, err error) {
 	err = global.GAV_DB.Table("user").Offset(0).Limit(10).Find(&userList).Count(&count).Error
 	return userList, count, err
 }

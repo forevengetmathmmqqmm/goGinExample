@@ -64,8 +64,9 @@ func (a *AccessApiGroup) AddAccessApi(c *gin.Context) {
 	accessRole := []system.RoleAccess{}
 	for _, value := range params.RoleId {
 		accessRole = append(accessRole, system.RoleAccess{
-			AccessId: access.ID,
-			RoleId:   value,
+			AccessId:  access.ID,
+			RoleId:    value,
+			CreatedOn: time.Now().Format("2006-01-02 15:04:05"),
 		})
 	}
 	errs := server_system.AddAccessRole(accessRole)

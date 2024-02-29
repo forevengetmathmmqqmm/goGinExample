@@ -28,7 +28,7 @@ func DelAccessParentId(id int) (err error) {
 }
 
 // 获取列表
-func GetAccessParentList() (list []system.ParentAccess, count int, err error) {
+func GetAccessParentList() (list []system.ParentAccess, count int64, err error) {
 	err = global.GAV_DB.Table("access_parent").Offset(0).Limit(10).Find(&list).Count(&count).Error
 	return list, count, err
 }
@@ -55,8 +55,15 @@ func EditAccess(params system.EditAccess) (access system.Access, err error) {
 }
 
 // 获取列表
-func GetAccessList() (list []system.Access, count int, err error) {
+func GetAccessList() (list []system.Access, count int64, err error) {
 	err = global.GAV_DB.Table("access").Offset(0).Limit(10).Find(&list).Count(&count).Error
+	for i, v := range list {
+		roleAccess := []system.RoleAccess{}
+		global.GAV_DB.Table("role_access").Find(&roleAccess, "access_id = ?", v.ID)
+		for _, a := range roleAccess {
+			list[i].RoleIds = append(list[i].RoleIds, a.RoleId)
+		}
+	}
 	return list, count, err
 }
 

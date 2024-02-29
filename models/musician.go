@@ -2,6 +2,8 @@ package models
 
 import (
 	"time"
+
+	"github.com/forevengetmathmmqqmm/goGinExample/global"
 )
 
 type MusicianRequest struct {
@@ -32,7 +34,7 @@ func AddMusician(data MusicianRequest) (musician Musician, err error) {
 	musician.MusicianRequest = data
 	musician.Status = 1
 	musician.CreateAt = time.Now().Format("2006-01-02 15:04:05")
-	err = db.Table("musician").Create(&musician).Error
+	err = global.GAV_DB.Table("musician").Create(&musician).Error
 	return musician, err
 }
 
@@ -43,18 +45,18 @@ func EditMusician(data MusicianRequest) (musician Musician, err error) {
 	} else {
 		data.Status = 1
 	}
-	db.Table("musician").Save(&data).Where("id = ?", data.Id).First(&musician)
+	global.GAV_DB.Table("musician").Save(&data).Where("id = ?", data.Id).First(&musician)
 	return musician, err
 }
 
 func GetMusicianList() (musician []Musician, count int64, err error) {
-	db.Table("musician").Count(&count)
-	db.Table("musician").Offset(0).Limit(10).Find(&musician)
+	global.GAV_DB.Table("musician").Count(&count)
+	global.GAV_DB.Table("musician").Offset(0).Limit(10).Find(&musician)
 	return
 }
 
 func GetMusicianDetail(id int) (musician Musician, err error) {
-	db.Table("musician").Where("id = ?", id).First(&musician)
+	global.GAV_DB.Table("musician").Where("id = ?", id).First(&musician)
 	return
 }
 
@@ -66,6 +68,6 @@ func DelMusician(id int) (err error) {
 	delData := DelMusicianResponse{
 		Id: id,
 	}
-	db.Table("musician").Delete(&delData)
+	global.GAV_DB.Table("musician").Delete(&delData)
 	return
 }

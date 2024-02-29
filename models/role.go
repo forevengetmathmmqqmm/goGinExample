@@ -7,3 +7,9 @@ type Role struct { // 结构体首字母大写, 和数据库表名对应, 默认
 	Status      int
 	AddTime     int
 }
+
+type Model struct {
+	ID         int    `gorm:"primary_key" json:"id"`
+	CreatedOn  string `json:"created_on"`
+	ModifiedOn string `json:"modified_on"`
+}

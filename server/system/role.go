@@ -11,7 +11,7 @@ func EditRole(params system.Role) (role system.Role, err error) {
 }
 
 // 获取角色列表
-func GetRoleList() (role []system.Role, count int, err error) {
+func GetRoleList() (role []system.Role, count int64, err error) {
 	err = global.GAV_DB.Table("role").Offset(0).Limit(10).Find(&role).Count(&count).Error
 	return role, count, err
 }
