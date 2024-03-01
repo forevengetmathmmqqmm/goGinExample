@@ -11,20 +11,20 @@ import (
 )
 
 var jwtSecret = []byte(setting.JwtSecret)
-var Blacklist = make(map[string]bool)
+var Blacklist = make(map[int]bool)
 
 type Claims struct {
-	Nickname string `json:"nickname"`
+	ID       int    `json:"id"`
 	Password string `json:"password"`
 	jwt.StandardClaims
 }
 
-func GenerateToken(nickname, password string) (string, error) {
+func GenerateToken(id int, password string) (string, error) {
 	nowTime := time.Now()
 	expireTime := nowTime.Add(3 * time.Hour)
 
 	claims := Claims{
-		nickname,
+		id,
 		password,
 		jwt.StandardClaims{
 			ExpiresAt: expireTime.Unix(),
@@ -45,7 +45,7 @@ func ParseToken(token string) (*Claims, error) {
 
 	if tokenClaims != nil {
 		if claims, ok := tokenClaims.Claims.(*Claims); ok && tokenClaims.Valid {
-			if Blacklist[claims.Nickname] {
+			if Blacklist[claims.ID] {
 				return claims, nil
 			} else {
 				err := errors.New(e.GetMsg(e.ERROR_AUTH_CHECK_TOKEN_FAIL))

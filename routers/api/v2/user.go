@@ -26,7 +26,7 @@ func UpdateWallet(c *gin.Context) {
 		})
 		return
 	}
-	sqlData := models.HasUser("nickname", claims.Nickname)
+	sqlData := models.HasUser("id", claims.ID)
 	var respData models.WalletResp
 	c.ShouldBind(&respData)
 	models.UpdateWallet(respData, sqlData.ID)

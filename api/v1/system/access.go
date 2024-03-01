@@ -62,13 +62,14 @@ func (a *AccessApiGroup) AddAccessApi(c *gin.Context) {
 		return
 	}
 	accessRole := []system.RoleAccess{}
-	for _, value := range params.RoleId {
+	for _, value := range params.RoleIds {
 		accessRole = append(accessRole, system.RoleAccess{
 			AccessId:  access.ID,
 			RoleId:    value,
 			CreatedOn: time.Now().Format("2006-01-02 15:04:05"),
 		})
 	}
+	access.RoleIds = params.RoleIds
 	errs := server_system.AddAccessRole(accessRole)
 	if errs != nil {
 		response.FailWithMessage(err.Error(), c)
@@ -98,9 +99,9 @@ func (a *AccessApiGroup) EditParentAccessApi(c *gin.Context) {
 	response.OkWithData(accessParent, c)
 }
 
-// 编辑父级路由
+// 编辑路由
 func (a *AccessApiGroup) EditAccessApi(c *gin.Context) {
-	var params system.EditAccess
+	var params system.EditAccessParams
 	err := c.ShouldBind(&params)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
@@ -112,6 +113,20 @@ func (a *AccessApiGroup) EditAccessApi(c *gin.Context) {
 	}
 	params.ModifiedOn = time.Now().Format("2006-01-02 15:04:05")
 	access, err := server_system.EditAccess(params)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	accessRole := []system.RoleAccess{}
+	for _, v := range params.RoleIds {
+		accessRole = append(accessRole, system.RoleAccess{
+			AccessId:  access.ID,
+			RoleId:    v,
+			CreatedOn: time.Now().Format("2006-01-02 15:04:05"),
+		})
+	}
+	access.RoleIds = params.RoleIds
+	err = server_system.EditAccessRole(accessRole, access.ID)
 	if err != nil {
 		response.FailWithMessage(err.Error(), c)
 		return

@@ -1,6 +1,9 @@
 package system
 
 import (
+	"fmt"
+	"sort"
+
 	"github.com/forevengetmathmmqqmm/goGinExample/global"
 	"github.com/forevengetmathmmqqmm/goGinExample/models/system"
 )
@@ -49,7 +52,62 @@ func AddAccessRole(params []system.RoleAccess) (err error) {
 	return err
 }
 
-func EditAccess(params system.EditAccess) (access system.Access, err error) {
+// 编辑role_access
+func EditAccessRole(params []system.RoleAccess, accessId int) (err error) {
+	global.GAV_DB.Table("role_access").Where("access_id = ?", accessId).Delete(&system.RoleAccess{})
+	err = AddAccessRole(params)
+	return err
+}
+
+type AccessList []system.Access
+
+func (a AccessList) Len() int {
+	return len(a)
+}
+func (p AccessList) Less(i, j int) bool {
+	return p[i].ParentRouterId < p[j].ParentRouterId
+}
+func (p AccessList) Swap(i, j int) {
+	p[i], p[j] = p[j], p[i]
+}
+
+// 筛选role_access
+func AccessRoleList(role_id int) (routers []system.Routers, err error) {
+	roleAccessList := []system.RoleAccess{}
+	global.GAV_DB.Table("role_access").Where("role_id = ?", role_id).Find(&roleAccessList)
+	accessList := AccessList{}
+	for _, v := range roleAccessList {
+		access, _ := GetAccessDetail(v.AccessId)
+		if access.Show == 1 {
+			accessList = append(accessList, access)
+		}
+	}
+	sort.Sort(accessList)
+	middleList := []system.Access{}
+	for i, v := range accessList {
+		if i == len(accessList)-1 || v.ParentRouterId != accessList[i+1].ParentRouterId {
+			middleList = append(middleList, v)
+			parentAccessData, _ := GetAccessParentDetail(v.ParentRouterId)
+			router := system.Routers{}
+			router.ChildrenList = middleList
+			router.ElPath = parentAccessData.ElPath
+			router.HasChildren = parentAccessData.HasChildren
+			router.ID = parentAccessData.ID
+			router.Icon = parentAccessData.Icon
+			router.Name = parentAccessData.Name
+			router.Path = parentAccessData.Path
+			routers = append(routers, router)
+			middleList = []system.Access{}
+		} else {
+			middleList = append(middleList, v)
+		}
+	}
+	fmt.Print("=====routers======", &routers)
+	return routers, err
+}
+
+// 编辑路由
+func EditAccess(params system.EditAccessParams) (access system.Access, err error) {
 	err = global.GAV_DB.Table("access").Save(&params).Find(&access, "path = ?", params.Path).Error
 	return access, err
 }
@@ -70,6 +128,11 @@ func GetAccessList() (list []system.Access, count int64, err error) {
 // 获取详情
 func GetAccessDetail(id int) (access system.Access, err error) {
 	err = global.GAV_DB.Table("access").First(&access, id).Error
+	roleAccess := []system.RoleAccess{}
+	global.GAV_DB.Table("role_access").Find(&roleAccess, "access_id = ?", id)
+	for _, a := range roleAccess {
+		access.RoleIds = append(access.RoleIds, a.RoleId)
+	}
 	return access, err
 }
 

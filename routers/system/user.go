@@ -19,5 +19,6 @@ func (u *UserRouter) InitUserRouter(Router *gin.RouterGroup) {
 		apiRouter.GET("userInfo/:id", userApi.GetUserDetail)
 		apiRouter.DELETE("userInfo/:id", userApi.DelUserDetail)
 		apiRouter.GET("userInfo/list", userApi.GetUserList)
+		apiRouter.GET("/routers", userApi.GetRoutersList)
 	}
 }

@@ -16,6 +16,7 @@ type User struct {
 	Address       string `json:"address"`
 	Intro         string `json:"intro"`
 	Avatar        string `json:"avatar"`
+	RoleId        int    `json:"role_id"`
 }
 type UserInfo struct {
 	User
@@ -70,9 +71,9 @@ func HasUser(key string, val interface{}) (user User) {
 	return
 }
 
-func GetUser(key string, val interface{}) (userInfo UserInfo) {
+func GetUser(key string, val interface{}) (userInfo UserInfo, err error) {
 	global.GAV_DB.Table("user").Select(
-		"user.id,user.created_on,user.modified_on,user.nickname,user.password,user.phone,user.email,user.wallet_address,user.address,user.intro,user.avatar,web3.keystore").Joins(
+		"user.id,user.created_on,user.modified_on,user.role_id,user.nickname,user.password,user.phone,user.email,user.wallet_address,user.address,user.intro,user.avatar,web3.keystore").Joins(
 		"left join web3 on web3.user_id = user.id").First(&userInfo)
 	return
 }

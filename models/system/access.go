@@ -14,6 +14,11 @@ type ParentAccess struct {
 	HasChildren int    `json:"has_children"`
 }
 
+type Routers struct {
+	ParentAccess
+	ChildrenList []Access `json:"children_list"`
+}
+
 type RoleAccess struct {
 	AccessId   int    `json:"access_id"`
 	RoleId     int    `json:"role_id"`
@@ -58,7 +63,7 @@ type Access struct {
 // 编辑
 type EditAccessParams struct {
 	EditAccess
-	RoleId []int `json:"role_id"`
+	RoleIds []int `json:"role_ids"`
 }
 
 // 编辑
@@ -87,5 +92,5 @@ type AddAccess struct {
 // 添加
 type AddAccessParams struct {
 	AddAccess
-	RoleId []int `json:"role_id"`
+	RoleIds []int `json:"role_ids"`
 }

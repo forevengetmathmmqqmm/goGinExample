@@ -3,6 +3,7 @@ package system
 import (
 	"time"
 
+	"github.com/forevengetmathmmqqmm/goGinExample/models"
 	"github.com/forevengetmathmmqqmm/goGinExample/models/common/response"
 	"github.com/forevengetmathmmqqmm/goGinExample/models/system"
 	"github.com/forevengetmathmmqqmm/goGinExample/pkg/util"
@@ -46,12 +47,12 @@ func (u *UserApiGroup) Login(c *gin.Context) {
 		response.FailWithMessage("账号或密码错误", c)
 		return
 	} else {
-		token, _ := util.GenerateToken(params.Nickname, params.Password)
+		token, _ := util.GenerateToken(user.ID, params.Password)
 		loginData := system.LoginResp{
 			Id:    user.ID,
 			Token: token,
 		}
-		util.Blacklist[params.Nickname] = true
+		util.Blacklist[user.ID] = true
 		response.OkWithDetailed(loginData, "登录成功", c)
 	}
 }
@@ -63,7 +64,7 @@ func (u *UserApiGroup) Logout(c *gin.Context) {
 	if err != nil {
 		response.FailWithMessage("Token鉴权失败", c)
 	} else {
-		util.Blacklist[claims.Nickname] = false
+		util.Blacklist[claims.ID] = false
 	}
 	response.OkWithMessage("登出成功", c)
 }
@@ -148,4 +149,25 @@ func (u *UserApiGroup) GetUserList(c *gin.Context) {
 		"list":  userList,
 		"total": count,
 	}, c)
+}
+
+// 获取路由列表
+func (u *UserApiGroup) GetRoutersList(c *gin.Context) {
+	token := c.Request.Header.Get("Authorization")
+	claims, err := util.ParseToken(token)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	userInfo, err := models.GetUser("id", claims.ID)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	routers, err := server_system.AccessRoleList(userInfo.RoleId)
+	if err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	response.OkWithData(routers, c)
 }
